@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Public Sans", system-ui, sans-serif;
+  color: #0f2a3d;
+}
+
+.font-display {
+  font-family: "Fraunces", serif;
+}
+
+.font-mono-data {
+  font-family: "IBM Plex Mono", monospace;
+}
+
+/* Signature element: boarding-pass / ticket card used for tours & bookings */
+.ticket {
+  position: relative;
+  background: #faf6ee;
+  border-radius: 8px;
+  border: 1px solid rgba(15, 42, 61, 0.15);
+  box-shadow: 0 4px 14px -2px rgba(15, 42, 61, 0.08), 0 2px 6px -1px rgba(15, 42, 61, 0.04);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
+}
+
+.ticket::before,
+.ticket::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: #efe6d3;
+  border: 1px solid rgba(15, 42, 61, 0.15);
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  box-shadow: inset 0 2px 4px rgba(15, 42, 61, 0.1);
+  z-index: 10;
+}
+
+.ticket::before {
+  left: -10px;
+}
+
+.ticket::after {
+  right: -10px;
+}
+
+.ticket-perforation {
+  border-left: 2px dashed rgba(201, 162, 75, 0.5);
+}
+
+/* Keyboard focus visibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #e8633a;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #efe6d3;
+}
+::-webkit-scrollbar-thumb {
+  background: #c9a24b;
+  border-radius: 8px;
+}
+
+/* Smooth button & card hover easing */
+button, a {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
