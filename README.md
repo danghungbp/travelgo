@@ -1,79 +1,76 @@
-# TravelGo — Website đặt tour du lịch (Chuyên đề 1)
+# TravelGo — Website đặt tour du lịch (Full-Stack)
 
-Khung giao diện + thao tác (frontend-only, dữ liệu mock lưu ở localStorage qua
-`src/services/mockApi.js`) cho đồ án Chuyên đề 1. Giai đoạn 2 sẽ nối backend
-thật (Node.js + Express + MongoDB Atlas) và deploy lên Cloud.
+Dự án đồ án chuyên đề 1: Hệ thống đặt tour du lịch trực tuyến.
+Hiện tại dự án đã hoàn thiện 100% kiến trúc **Full-Stack (3-Tier Architecture)** bao gồm Frontend (React/Vite), Backend (Node.js/Express) và Cơ sở dữ liệu (MongoDB Atlas). 
 
-## Chạy thử trên máy
+Hệ thống đã được tự động hoá triển khai (CI/CD) thành công lên môi trường Cloud.
 
+---
+
+## 🌍 Demo trực tuyến (Live Demo)
+- **Website (Frontend):** [https://travelgo-bice.vercel.app](https://travelgo-bice.vercel.app)
+- **API Server (Backend):** [https://travelgo-backend-tbey.onrender.com](https://travelgo-backend-tbey.onrender.com)
+- **Tài khoản quản trị viên (Admin):** 
+  - Email: `admin@travelgo.vn`
+  - Mật khẩu: `admin123`
+*(Bạn có thể tự đăng ký tài khoản User mới ngay trên trang Đăng ký).*
+
+---
+
+## 🛠️ Công nghệ sử dụng
+- **Frontend:** React (Vite), TailwindCSS, React Router DOM.
+- **Backend:** Node.js, Express.js.
+- **Database:** MongoDB Atlas (Cloud NoSQL Database), Mongoose.
+- **Triển khai (Cloud Deployment):** Vercel (Frontend), Render (Backend).
+
+---
+
+## 🚀 Hướng dẫn chạy thử trên máy cá nhân (Local Development)
+
+### 1. Khởi động Backend và Cơ sở dữ liệu
+Mở terminal 1, trỏ vào thư mục `server`:
 ```bash
-cd travelgo
+cd server
+npm install
+npm run seed  # Chỉ chạy lần đầu để nạp dữ liệu mẫu vào DB
+npm run dev
+```
+*Backend sẽ chạy tại: `http://localhost:5000`*
+
+### 2. Khởi động Frontend (Giao diện)
+Mở terminal 2, trỏ vào thư mục gốc `travelgo`:
+```bash
 npm install
 npm run dev
 ```
+*Frontend sẽ chạy tại: `http://localhost:5173`*
 
-Mở http://localhost:5173
+---
 
-Tài khoản admin demo: `admin@travelgo.vn` / `admin123`
-(Tự đăng ký tài khoản user mới ngay trên trang Đăng ký.)
-
-## Cấu trúc project
-
+## 📂 Cấu trúc dự án
+```text
+travelgo/
+│
+├── server/                     # [BACKEND - API & DATABASE]
+│   ├── config/db.js            # Cấu hình kết nối MongoDB
+│   ├── controllers/            # Xử lý logic API (Auth, Tours, Bookings, Reviews, Admin)
+│   ├── models/                 # Mongoose Schemas (User, Tour, Booking, Review)
+│   ├── routes/                 # Định nghĩa các Endpoints (RESTful API)
+│   ├── seed/seeder.js          # Script tự động nạp dữ liệu mẫu
+│   └── server.js               # Entry point khởi chạy Express server
+│
+├── src/                        # [FRONTEND - GIAO DIỆN REACT]
+│   ├── components/             # Navbar, Footer, TourCard, E-Ticket 3D...
+│   ├── context/AuthContext.jsx # Quản lý phiên đăng nhập toàn cục
+│   ├── pages/                  # Các trang Home, Tours, Login, Profile, Admin Dashboard...
+│   └── services/mockApi.js     # Hàm fetch gọi API tới Backend
+│
+├── vercel.json                 # Cấu hình SPA Routing cho Vercel (chống lỗi 404)
+└── package.json
 ```
-src/
-  data/mockData.js        # dữ liệu mẫu: 8 tour, 5 danh mục
-  services/mockApi.js      # "giả lập" toàn bộ REST API — mỗi hàm có comment
-                            # ghi rõ endpoint thật tương ứng (vd: POST /api/auth/login)
-  context/AuthContext.jsx  # quản lý session đăng nhập toàn site
-  components/              # Navbar, Footer, TourCard, PosterArt (minh hoạ SVG), ...
-  pages/                   # Home, Tours, TourDetail, Login, Register, Profile, MyBookings
-  pages/admin/             # Dashboard, ManageTours, ManageBookings, ManageUsers
-```
 
-Vì `mockApi.js` được viết với chữ ký hàm giống 1-1 với API thật (cùng tên,
-cùng input/output), khi có backend thật chỉ cần thay nội dung từng hàm bằng
-`fetch()`/`axios` gọi server — toàn bộ UI giữ nguyên, không phải sửa lại.
-
-## Đáp ứng yêu cầu kỹ thuật tối thiểu của đề (mục C)
-
-- Kiến trúc 3 tầng: Frontend (React) tách biệt hoàn toàn khỏi tầng dữ liệu
-  qua `mockApi.js` (sẽ thay bằng Backend/API + Database thật ở giai đoạn 2).
-- ≥5 chức năng nghiệp vụ: tìm/lọc tour, đặt tour, huỷ đơn, viết đánh giá,
-  quản lý hồ sơ, quản trị tour/đơn/người dùng.
-- Đăng ký / Đăng nhập / Quản lý hồ sơ cá nhân: có (`Register.jsx`,
-  `Login.jsx`, `Profile.jsx`).
-- Phân quyền User / Administrator: có (`RequireAdmin`, route `/admin/*`).
-- ≥5 API endpoint dự kiến: xem comment đầu mỗi nhóm hàm trong `mockApi.js`
-  (auth, tours, bookings, reviews, admin — tổng cộng 15+ endpoint).
-- ≥5 bảng dữ liệu: `users`, `tours`, `bookings`, `reviews`, và
-  `project/category` tham chiếu (categories) — khi lên MongoDB sẽ là
-  5 collection: `users`, `tours`, `bookings`, `reviews`, `categories`.
-
-## Kế hoạch giai đoạn 2 — Backend + Deploy Cloud
-
-**Backend (Node.js + Express + MongoDB Atlas):**
-1. Tạo project Express, kết nối MongoDB Atlas qua Mongoose.
-2. Định nghĩa schema: `User`, `Tour`, `Booking`, `Review`.
-3. Viết lại từng hàm trong `mockApi.js` thành route Express tương ứng
-   (đã ghi sẵn đường dẫn endpoint trong comment).
-4. Auth bằng JWT: `POST /api/auth/register`, `POST /api/auth/login`,
-   middleware `verifyToken` + `requireAdmin`.
-5. Test API bằng Postman/Thunder Client trước khi nối frontend.
-
-**Nối frontend với backend thật:**
-- Thay nội dung các hàm trong `mockApi.js` bằng `fetch(`${API_URL}/...`)`.
-- Lưu JWT token vào `localStorage`, gắn header `Authorization: Bearer <token>`.
-
-**Deploy lên Cloud (miễn phí, dễ làm cho sinh viên):**
-- Database: MongoDB Atlas (free tier M0).
-- Backend: Render hoặc Railway (deploy từ GitHub repo Express).
-- Frontend: Vercel hoặc Netlify (deploy từ GitHub repo React, build command
-  `npm run build`, output `dist`).
-- Cấu hình biến môi trường `VITE_API_URL` trên Vercel trỏ tới URL backend.
-
-## Build production
-
-```bash
-npm run build   # xuất ra thư mục dist/, sẵn sàng deploy lên Vercel/Netlify
-npm run preview
-```
+## ✨ Các tính năng nổi bật
+- **Thiết kế UI/UX độc đáo:** Concept "Vé Máy Bay/Sổ thông hành" cổ điển (Vintage Travel Pass) với hiệu ứng 3D đổ bóng, đục lỗ vé.
+- **Đầy đủ nghiệp vụ:** Tìm kiếm, lọc tour, đặt chỗ, hủy đơn, viết đánh giá 5 sao.
+- **Hệ thống Quản trị (Admin Dashboard):** Quản lý toàn bộ Tour, người dùng và duyệt đơn đặt vé (kèm doanh thu, thống kê).
+- **Hoạt động theo chuẩn REST API:** Toàn bộ giao tiếp giữa Frontend và Backend sử dụng HTTP fetch() và JSON.
