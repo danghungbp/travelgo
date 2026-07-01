@@ -118,6 +118,23 @@ async function seedData() {
     console.log("🌱 Đang nạp dữ liệu Reviews...");
     await Review.insertMany(seedReviews);
 
+    console.log("🔄 Đang đồng bộ số lượng đánh giá thực tế...");
+    const insertedTours = await Tour.find();
+    for (let tour of insertedTours) {
+      const tourReviews = await Review.find({ tourId: tour.id });
+      if (tourReviews.length > 0) {
+        await Tour.updateOne(
+          { _id: tour._id },
+          { $set: { reviewCount: tourReviews.length } }
+        );
+      } else {
+        await Tour.updateOne(
+          { _id: tour._id },
+          { $set: { reviewCount: 0 } }
+        );
+      }
+    }
+
     console.log("✅ Nạp dữ liệu thành công 100%!");
     process.exit(0);
   } catch (error) {
