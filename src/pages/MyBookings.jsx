@@ -140,21 +140,29 @@ export default function MyBookings() {
                   </div>
 
                   {/* SVG Barcode mô phỏng */}
-                  <div className="my-3 w-full h-12 bg-paper p-1.5 rounded border border-ink/15 flex items-center justify-center opacity-85">
-                    <svg viewBox="0 0 120 30" className="w-full h-full fill-ink">
-                      {[2,6,10,12,18,22,24,30,34,38,42,48,50,56,60,66,70,74,80,84,88,92,98,102,106,112,116].map((x, i) => (
-                        <rect key={x} x={x} y="0" width={i % 2 === 0 ? 3 : 1.5} height="30" />
-                      ))}
-                    </svg>
-                  </div>
+                  {b.status === "cancelled" ? (
+                    <div className="my-3 w-full h-12 bg-coral/10 p-1.5 rounded border border-coral/30 flex items-center justify-center">
+                      <span className="font-mono-data font-bold text-coral text-lg tracking-[0.2em] opacity-80">VOID</span>
+                    </div>
+                  ) : (
+                    <div className="my-3 w-full h-12 bg-paper p-1.5 rounded border border-ink/15 flex items-center justify-center opacity-85">
+                      <svg viewBox="0 0 120 30" className="w-full h-full fill-ink">
+                        {[2,6,10,12,18,22,24,30,34,38,42,48,50,56,60,66,70,74,80,84,88,92,98,102,106,112,116].map((x, i) => (
+                          <rect key={x} x={x} y="0" width={i % 2 === 0 ? 3 : 1.5} height="30" />
+                        ))}
+                      </svg>
+                    </div>
+                  )}
 
                   <div className="w-full space-y-2">
-                    <button
-                      onClick={() => setSelectedTicket(b)}
-                      className="w-full bg-ink hover:bg-ink-light text-paper font-mono-data text-xs uppercase tracking-widest py-2 rounded font-bold shadow-xs transition-transform active:scale-95"
-                    >
-                      👁 Xem E-Ticket
-                    </button>
+                    {b.status !== "cancelled" && (
+                      <button
+                        onClick={() => setSelectedTicket(b)}
+                        className="w-full bg-ink hover:bg-ink-light text-paper font-mono-data text-xs uppercase tracking-widest py-2 rounded font-bold shadow-xs transition-transform active:scale-95"
+                      >
+                        👁 Xem E-Ticket
+                      </button>
+                    )}
 
                     {b.status === "pending" && (
                       <button
