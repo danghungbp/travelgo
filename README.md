@@ -13,7 +13,7 @@ Hệ thống đã được tự động hoá triển khai (CI/CD) thành công l
 - **Tài khoản quản trị viên (Admin):** 
   - Email: `admin@travelgo.vn`
   - Mật khẩu: `admin123`
-*(Bạn có thể tự đăng ký tài khoản User mới ngay trên trang Đăng ký).*
+*(Có thể tự đăng ký tài khoản User mới ngay trên trang Đăng ký)*
 
 ---
 

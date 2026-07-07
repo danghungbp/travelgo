@@ -29,7 +29,7 @@ export default function MyBookings() {
       const openId = new URLSearchParams(location.search).get("open");
       if (openId) {
         const found = sorted.find((b) => b.id === Number(openId));
-        if (found) setSelectedTicket(found);
+        if (found && found.status === "confirmed") setSelectedTicket(found);
       }
     });
   }, [user.id, location.search]);
@@ -144,6 +144,10 @@ export default function MyBookings() {
                     <div className="my-3 w-full h-12 bg-coral/10 p-1.5 rounded border border-coral/30 flex items-center justify-center">
                       <span className="font-mono-data font-bold text-coral text-lg tracking-[0.2em] opacity-80">VOID</span>
                     </div>
+                  ) : b.status === "pending" ? (
+                    <div className="my-3 w-full h-12 bg-gold/20 p-1.5 rounded border border-gold/50 flex items-center justify-center">
+                      <span className="font-mono-data font-bold text-ink text-xs tracking-[0.1em] uppercase">⏳ UNPAID</span>
+                    </div>
                   ) : (
                     <div className="my-3 w-full h-12 bg-paper p-1.5 rounded border border-ink/15 flex items-center justify-center opacity-85">
                       <svg viewBox="0 0 120 30" className="w-full h-full fill-ink">
@@ -155,7 +159,7 @@ export default function MyBookings() {
                   )}
 
                   <div className="w-full space-y-2">
-                    {b.status !== "cancelled" && (
+                    {b.status === "confirmed" && (
                       <button
                         onClick={() => setSelectedTicket(b)}
                         className="w-full bg-ink hover:bg-ink-light text-paper font-mono-data text-xs uppercase tracking-widest py-2 rounded font-bold shadow-xs transition-transform active:scale-95"
