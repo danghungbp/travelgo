@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import * as api from "../services/mockApi.js";
 import { categories } from "../data/mockData.js";
 import TourCard from "../components/TourCard.jsx";
+import PromoPopup from "../components/PromoPopup.jsx";
 
 export default function Home() {
   const [featured, setFeatured] = useState([]);
@@ -22,6 +23,7 @@ export default function Home() {
 
   return (
     <div className="space-y-16 pb-16">
+      <PromoPopup />
       {/* HERO SECTION — Vintage Poster & Giant Boarding Pass */}
       <section className="relative bg-poster-gradient text-paper overflow-hidden border-b-4 border-gold shadow-xl">
         {/* Background Texture & Decorative Elements */}
